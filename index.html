@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Present Perfect Conversations | Irregular Verbs</title>
+<style>
+  :root{
+    --bg1:#07142b;
+    --bg2:#111a46;
+    --card:#101b3d;
+    --card2:#162653;
+    --text:#f7f9ff;
+    --muted:#b9c7ef;
+    --cyan:#39d9ff;
+    --violet:#9a63ff;
+    --pink:#ff66d9;
+    --green:#68f0b2;
+    --red:#ff7b8a;
+    --yellow:#ffd66b;
+    --border:rgba(255,255,255,.12);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 15% 10%, rgba(57,217,255,.16), transparent 30%),
+      radial-gradient(circle at 85% 15%, rgba(154,99,255,.18), transparent 30%),
+      linear-gradient(145deg,var(--bg1),var(--bg2));
+    min-height:100vh;
+  }
+  .wrap{max-width:1200px;margin:auto;padding:28px 18px 70px}
+  .hero{
+    border:1px solid var(--border);
+    background:linear-gradient(135deg,rgba(19,35,78,.94),rgba(16,25,61,.94));
+    border-radius:28px;
+    padding:30px;
+    box-shadow:0 30px 80px rgba(0,0,0,.34);
+    overflow:hidden;
+    position:relative;
+  }
+  .hero:after{
+    content:"";
+    position:absolute;inset:auto -100px -140px auto;
+    width:360px;height:360px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,102,217,.18),transparent 65%);
+  }
+  .eyebrow{color:var(--cyan);font-weight:800;letter-spacing:.13em;text-transform:uppercase;font-size:.82rem}
+  h1{font-size:clamp(2rem,5vw,4rem);line-height:.98;margin:8px 0 14px}
+  h1 span{background:linear-gradient(90deg,var(--cyan),#fff,var(--violet));-webkit-background-clip:text;color:transparent}
+  .hero p{max-width:800px;color:var(--muted);font-size:1.35rem;line-height:1.7}
+  .instructions{
+    margin-top:18px;display:flex;gap:10px;flex-wrap:wrap
+  }
+  .pill{
+    padding:10px 14px;border-radius:999px;border:1px solid var(--border);
+    background:rgba(255,255,255,.045);color:#dfe7ff;font-size:1.08rem
+  }
+  .topbar{
+    display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;
+    margin:22px 0;
+  }
+  .progressbox{
+    background:rgba(255,255,255,.05);border:1px solid var(--border);
+    border-radius:18px;padding:15px
+  }
+  .progresshead{display:flex;justify-content:space-between;color:var(--muted);font-size:1.08rem;margin-bottom:10px}
+  .track{height:11px;background:#071126;border-radius:999px;overflow:hidden}
+  .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));transition:.3s}
+  .score{
+    min-width:170px;text-align:center;border:1px solid var(--border);
+    border-radius:18px;padding:14px 20px;background:rgba(255,255,255,.05)
+  }
+  .score strong{font-size:2.25rem;color:var(--green)}
+  .grid{display:grid;gap:18px}
+  .card{
+    background:linear-gradient(155deg,rgba(16,27,61,.96),rgba(21,37,82,.92));
+    border:1px solid var(--border);border-radius:24px;padding:22px;
+    box-shadow:0 15px 45px rgba(0,0,0,.2)
+  }
+  .cardhead{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
+  .cardhead h2{margin:0;font-size:1.55rem}
+  .tag{font-size:.78rem;color:#081329;background:var(--yellow);font-weight:900;padding:6px 10px;border-radius:999px}
+  .chat{display:flex;flex-direction:column;gap:12px}
+  .bubble{
+    max-width:88%;padding:14px 16px;border-radius:18px;line-height:1.7;font-size:1.32rem;
+    border:1px solid var(--border);position:relative
+  }
+  .left{align-self:flex-start;background:rgba(154,99,255,.12)}
+  .right{align-self:flex-end;background:rgba(57,217,255,.10)}
+  .name{font-weight:900;margin-right:6px}
+  .left .name{color:#d9bdff}.right .name{color:#86eaff}
+  .blankwrap{
+    display:inline-flex;flex-direction:column;vertical-align:middle;
+    gap:2px;margin:0 4px;min-width:135px
+  }
+  input.blank{
+    width:140px;max-width:42vw;
+    border:2px solid rgba(255,255,255,.18);
+    background:#08142f;color:white;border-radius:10px;
+    padding:8px 10px;font-size:1.28rem;font-weight:800;outline:none;
+    transition:.2s
+  }
+  input.blank:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(57,217,255,.10)}
+  input.blank.correct{border-color:var(--green);background:rgba(104,240,178,.08)}
+  input.blank.wrong{border-color:var(--red);background:rgba(255,123,138,.08)}
+  .clue{font-size:.92rem;color:var(--muted);line-height:1.15}
+  .clue b{color:var(--yellow)}
+  .trans{display:block;color:#9fb5ef;font-size:.86rem;margin-top:1px}
+  .feedback{min-height:24px;margin-top:14px;font-weight:800}
+  .feedback.ok{color:var(--green)}
+  .feedback.bad{color:var(--red)}
+  .cardactions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  button{
+    border:none;border-radius:12px;padding:13px 18px;font-weight:900;
+    cursor:pointer;transition:.18s;font-size:1.08rem
+  }
+  button:hover{transform:translateY(-1px)}
+  .check{background:linear-gradient(90deg,var(--cyan),#76f2ff);color:#051129}
+  .speak{background:rgba(255,255,255,.08);color:white;border:1px solid var(--border)}
+  .footeractions{
+    position:sticky;bottom:14px;z-index:20;
+    display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+    margin-top:24px;padding:12px;border-radius:18px;
+    background:rgba(5,12,32,.82);backdrop-filter:blur(14px);
+    border:1px solid var(--border)
+  }
+  .primary{background:linear-gradient(90deg,var(--violet),var(--pink));color:white}
+  .secondary{background:#172650;color:white;border:1px solid var(--border)}
+  .answers{background:linear-gradient(90deg,#ffd66b,#ffb84d);color:#231604}
+  .legend{
+    margin:24px 0 4px;padding:18px;border-radius:18px;
+    background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted)
+  }
+  .legend strong{color:white}
+  @media(max-width:700px){
+    .topbar{grid-template-columns:1fr}
+    .score{width:100%}
+    .bubble{max-width:100%}
+    .hero{padding:22px}
+    .card{padding:17px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">English Practice • Present Perfect</div>
+    <h1><span>Complete the Conversations</span></h1>
+    <p>Complete each gap with the correct <strong>past participle</strong> of the irregular verb. The Spanish translation appears under each verb to help you.</p>
+    <div class="instructions">
+      <div class="pill">✓ Use have / has + past participle</div>
+      <div class="pill">✓ Questions, positives & negatives</div>
+      <div class="pill">✓ Click 🔊 to listen</div>
+    </div>
+  </section>
+
+  <div class="topbar">
+    <div class="progressbox">
+      <div class="progresshead"><span>Progress</span><span id="progressText">0 / 12 completed</span></div>
+      <div class="track"><div class="bar" id="progressBar"></div></div>
+    </div>
+    <div class="score">Score<br><strong id="score">0 / 12</strong></div>
+  </div>
+
+  <main class="grid" id="activities">
+
+    <section class="card" data-id="1">
+      <div class="cardhead"><h2>Conversation 1 — A new English book</h2><span class="tag">BOOKS</span></div>
+      <div class="chat">
+        <div class="bubble left"><span class="name">Ana:</span> Have you <span class="blankwrap"><input class="blank" data-answer="seen" autocomplete="off"><span class="clue"><b>see</b><span class="trans">ver</span></span></span> the new English book?</div>
+        <div class="bubble right"><span class="name">Leo:</span> Yes, I have. I have <span class="blankwrap"><input class="blank" data-answer="taken" autocomplete="off"><span class="clue"><b>take</b><span class="trans">tomar / llevar</span></span></span> it to class twice.</div>
+        <div class="bubble left"><span class="name">Ana:</span> Really? I haven't <span class="blankwrap"><input class="blank" data-answer="found" autocomplete="off"><span class="clue"><b>find</b><span class="trans">encontrar</span></span></span> my copy yet.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="2">
+      <div class="cardhead"><h2>Conversation 2 — Homework</h2><span class="tag">STUDY</span></div>
+      <div class="chat">
+        <div class="bubble right"><span class="name">Leo:</span> Have you <span class="blankwrap"><input class="blank" data-answer="done" autocomplete="off"><span class="clue"><b>do</b><span class="trans">hacer</span></span></span> the homework?</div>
+        <div class="bubble left"><span class="name">Ana:</span> I have <span class="blankwrap"><input class="blank" data-answer="written" autocomplete="off"><span class="clue"><b>write</b><span class="trans">escribir</span></span></span> the first three answers, but I haven't finished it.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="3">
+      <div class="cardhead"><h2>Conversation 3 — Lunch</h2><span class="tag">FOOD</span></div>
+      <div class="chat">
+        <div class="bubble left"><span class="name">Ana:</span> Have you <span class="blankwrap"><input class="blank" data-answer="eaten" autocomplete="off"><span class="clue"><b>eat</b><span class="trans">comer</span></span></span> lunch yet?</div>
+        <div class="bubble right"><span class="name">Leo:</span> Yes, I have. I have <span class="blankwrap"><input class="blank" data-answer="had" autocomplete="off"><span class="clue"><b>have</b><span class="trans">tener / tomar</span></span></span> a sandwich and some fruit.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="4">
+      <div class="cardhead"><h2>Conversation 4 — Adventures</h2><span class="tag">TRAVEL</span></div>
+      <div class="chat">
+        <div class="bubble right"><span class="name">Leo:</span> Have you ever <span class="blankwrap"><input class="blank" data-answer="ridden" autocomplete="off"><span class="clue"><b>ride</b><span class="trans">montar / conducir</span></span></span> a horse?</div>
+        <div class="bubble left"><span class="name">Ana:</span> Yes, I have. But I have never <span class="blankwrap"><input class="blank" data-answer="swum" autocomplete="off"><span class="clue"><b>swim</b><span class="trans">nadar</span></span></span> with sharks!</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="5">
+      <div class="cardhead"><h2>Conversation 5 — New people</h2><span class="tag">FRIENDS</span></div>
+      <div class="chat">
+        <div class="bubble left"><span class="name">Ana:</span> Have you <span class="blankwrap"><input class="blank" data-answer="met" autocomplete="off"><span class="clue"><b>meet</b><span class="trans">conocer / reunirse</span></span></span> the new student?</div>
+        <div class="bubble right"><span class="name">Leo:</span> Yes, I have, but I haven't <span class="blankwrap"><input class="blank" data-answer="spoken" autocomplete="off"><span class="clue"><b>speak</b><span class="trans">hablar</span></span></span> to her very much.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="6">
+      <div class="cardhead"><h2>Conversation 6 — Weekend trip</h2><span class="tag">WEEKEND</span></div>
+      <div class="chat">
+        <div class="bubble right"><span class="name">Leo:</span> Have you ever <span class="blankwrap"><input class="blank" data-answer="driven" autocomplete="off"><span class="clue"><b>drive</b><span class="trans">conducir</span></span></span> to the mountains?</div>
+        <div class="bubble left"><span class="name">Ana:</span> No, I haven't. But I have <span class="blankwrap"><input class="blank" data-answer="spent" autocomplete="off"><span class="clue"><b>spend</b><span class="trans">pasar / gastar</span></span></span> the night in a forest.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="7">
+      <div class="cardhead"><h2>Conversation 7 — A movie night</h2><span class="tag">MOVIES</span></div>
+      <div class="chat">
+        <div class="bubble left"><span class="name">Ana:</span> Have you <span class="blankwrap"><input class="blank" data-answer="seen" autocomplete="off"><span class="clue"><b>see</b><span class="trans">ver</span></span></span> the new action movie?</div>
+        <div class="bubble right"><span class="name">Leo:</span> Yes, I have. I have <span class="blankwrap"><input class="blank" data-answer="gone" autocomplete="off"><span class="clue"><b>go</b><span class="trans">ir</span></span></span> to the cinema twice this month.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="8">
+      <div class="cardhead"><h2>Conversation 8 — At the university</h2><span class="tag">CAMPUS</span></div>
+      <div class="chat">
+        <div class="bubble right"><span class="name">Leo:</span> Have you <span class="blankwrap"><input class="blank" data-answer="read" autocomplete="off"><span class="clue"><b>read</b><span class="trans">leer</span></span></span> the article for class?</div>
+        <div class="bubble left"><span class="name">Ana:</span> Yes, I have, but I haven't <span class="blankwrap"><input class="blank" data-answer="understood" autocomplete="off"><span class="clue"><b>understand</b><span class="trans">entender</span></span></span> the last part.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="9">
+      <div class="cardhead"><h2>Conversation 9 — Travel plans</h2><span class="tag">TRAVEL</span></div>
+      <div class="chat">
+        <div class="bubble left"><span class="name">Ana:</span> Have you ever <span class="blankwrap"><input class="blank" data-answer="flown" autocomplete="off"><span class="clue"><b>fly</b><span class="trans">volar</span></span></span> to another country?</div>
+        <div class="bubble right"><span class="name">Leo:</span> Yes, I have. I have also <span class="blankwrap"><input class="blank" data-answer="been" autocomplete="off"><span class="clue"><b>be</b><span class="trans">ser / estar</span></span></span> to Chile.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="10">
+      <div class="cardhead"><h2>Conversation 10 — A busy week</h2><span class="tag">DAILY LIFE</span></div>
+      <div class="chat">
+        <div class="bubble right"><span class="name">Leo:</span> You look tired. Have you <span class="blankwrap"><input class="blank" data-answer="slept" autocomplete="off"><span class="clue"><b>sleep</b><span class="trans">dormir</span></span></span> well this week?</div>
+        <div class="bubble left"><span class="name">Ana:</span> Not really. I have <span class="blankwrap"><input class="blank" data-answer="had" autocomplete="off"><span class="clue"><b>have</b><span class="trans">tener</span></span></span> a lot of work.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="11">
+      <div class="cardhead"><h2>Conversation 11 — Technology</h2><span class="tag">TECH</span></div>
+      <div class="chat">
+        <div class="bubble left"><span class="name">Ana:</span> Have you <span class="blankwrap"><input class="blank" data-answer="bought" autocomplete="off"><span class="clue"><b>buy</b><span class="trans">comprar</span></span></span> a new phone?</div>
+        <div class="bubble right"><span class="name">Leo:</span> Yes, I have, but I haven't <span class="blankwrap"><input class="blank" data-answer="sent" autocomplete="off"><span class="clue"><b>send</b><span class="trans">enviar</span></span></span> all my photos to it yet.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+    <section class="card" data-id="12">
+      <div class="cardhead"><h2>Conversation 12 — An interesting class</h2><span class="tag">CLASS</span></div>
+      <div class="chat">
+        <div class="bubble right"><span class="name">Leo:</span> Have you <span class="blankwrap"><input class="blank" data-answer="learned" data-alt="learnt" autocomplete="off"><span class="clue"><b>learn</b><span class="trans">aprender</span></span></span> anything new today?</div>
+        <div class="bubble left"><span class="name">Ana:</span> Yes! The teacher has <span class="blankwrap"><input class="blank" data-answer="taught" autocomplete="off"><span class="clue"><b>teach</b><span class="trans">enseñar</span></span></span> us some useful expressions.</div>
+      </div>
+      <div class="feedback"></div>
+      <div class="cardactions"><button class="check">Check</button><button class="speak">🔊 Listen</button></div>
+    </section>
+
+  </main>
+
+  <div class="legend">
+    <strong>Tip:</strong> In the Present Perfect, use <strong>have/has + past participle</strong>. Example: <em>I have seen</em>, <em>She has written</em>, <em>They haven't eaten</em>.
+  </div>
+
+  <div class="footeractions">
+    <button class="primary" id="checkAll">✓ Check all</button>
+    <button class="answers" id="showAnswers">👁 Show answers</button>
+    <button class="secondary" id="reset">↻ Reset</button>
+  </div>
+</div>
+
+<script>
+const inputs = [...document.querySelectorAll('.blank')];
+const cards = [...document.querySelectorAll('.card')];
+const scoreEl = document.getElementById('score');
+const progressText = document.getElementById('progressText');
+const progressBar = document.getElementById('progressBar');
+
+function norm(s){
+  return s.trim().toLowerCase().replace(/[’']/g,"'");
+}
+
+function updateProgress(){
+  const completed = inputs.filter(i => i.value.trim() !== '').length;
+  progressText.textContent = `${completed} / ${inputs.length} completed`;
+  progressBar.style.width = `${(completed/inputs.length)*100}%`;
+
+  const correct = inputs.filter(i => [i.dataset.answer, i.dataset.alt].filter(Boolean).map(norm).includes(norm(i.value))).length;
+  scoreEl.textContent = `${correct} / ${inputs.length}`;
+}
+
+function checkCard(card){
+  const cardInputs = [...card.querySelectorAll('.blank')];
+  let correct = 0;
+  cardInputs.forEach(i=>{
+    i.classList.remove('correct','wrong');
+    if([i.dataset.answer, i.dataset.alt].filter(Boolean).map(norm).includes(norm(i.value))){
+      i.classList.add('correct'); correct++;
+    }else{
+      i.classList.add('wrong');
+    }
+  });
+  const fb = card.querySelector('.feedback');
+  if(correct === cardInputs.length){
+    fb.textContent = 'Excellent! All answers are correct. ✓';
+    fb.className = 'feedback ok';
+  }else{
+    fb.textContent = `${correct} of ${cardInputs.length} correct. Try again.`;
+    fb.className = 'feedback bad';
+  }
+  updateProgress();
+}
+
+inputs.forEach(i=>{
+  i.addEventListener('input',()=>{
+    i.classList.remove('correct','wrong');
+    updateProgress();
+  });
+  i.addEventListener('keydown',e=>{
+    if(e.key === 'Enter'){
+      checkCard(i.closest('.card'));
+    }
+  });
+});
+
+document.querySelectorAll('.check').forEach(btn=>{
+  btn.addEventListener('click',()=>checkCard(btn.closest('.card')));
+});
+
+document.getElementById('checkAll').addEventListener('click',()=>{
+  cards.forEach(checkCard);
+  const correct = inputs.filter(i => [i.dataset.answer, i.dataset.alt].filter(Boolean).map(norm).includes(norm(i.value))).length;
+  setTimeout(()=>{
+    alert(correct === inputs.length
+      ? `Fantastic! You got ${correct}/${inputs.length}!`
+      : `Your score is ${correct}/${inputs.length}. Check the red boxes and try again.`);
+  },100);
+});
+
+document.getElementById('showAnswers').addEventListener('click',()=>{
+  inputs.forEach(i=>{
+    i.value = i.dataset.answer;
+    i.classList.remove('wrong');
+    i.classList.add('correct');
+  });
+  cards.forEach(card=>{
+    const fb=card.querySelector('.feedback');
+    fb.textContent='Answers displayed.';
+    fb.className='feedback ok';
+  });
+  updateProgress();
+});
+
+document.getElementById('reset').addEventListener('click',()=>{
+  inputs.forEach(i=>{
+    i.value='';
+    i.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll('.feedback').forEach(f=>{
+    f.textContent='';
+    f.className='feedback';
+  });
+  speechSynthesis.cancel();
+  updateProgress();
+});
+
+document.querySelectorAll('.speak').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    speechSynthesis.cancel();
+    const card = btn.closest('.card');
+    let text = '';
+    card.querySelectorAll('.bubble').forEach(bubble=>{
+      const clone = bubble.cloneNode(true);
+      clone.querySelectorAll('.blankwrap').forEach(w=>{
+        const input = w.querySelector('input');
+        const replacement = document.createTextNode(input.dataset.answer);
+        w.replaceWith(replacement);
+      });
+      clone.querySelectorAll('.clue,.trans').forEach(el=>el.remove());
+      text += clone.innerText + ' ';
+    });
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang='en-US';
+    u.rate=.88;
+    u.pitch=1;
+    speechSynthesis.speak(u);
+  });
+});
+
+updateProgress();
+</script>
+</body>
+</html>
